@@ -2,6 +2,7 @@ package com.example.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -30,14 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void initializeComponents(){
         Button btnSignin = findViewById(R.id.loginButton);
+        Intent potholesIntent = new Intent(this, PotholesActivity.class);
         EditText someText = findViewById(R.id.emailLoginEditText);
 
         //Action after sign in
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String stringa = String.valueOf(someText.getText());
-                sendMessageToServer(stringa);
+                startActivity(potholesIntent);
+                //String stringa = String.valueOf(someText.getText());
+                //sendMessageToServer(stringa);
             }
         });
 
