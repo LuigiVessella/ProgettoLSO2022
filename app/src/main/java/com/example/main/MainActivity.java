@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.main.ClientServer.ClientServer;
+import com.example.main.Sensor.Accelerometer;
 
 public class MainActivity extends AppCompatActivity {
     ClientServer client;
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(potholesIntent);
+                Accelerometer acc = new Accelerometer(getApplicationContext());
+                //startActivity(potholesIntent);
                 //String stringa = String.valueOf(someText.getText());
                 //sendMessageToServer(stringa);
             }
