@@ -14,6 +14,7 @@ import com.example.main.Sensor.Accelerometer;
 
 public class MainActivity extends AppCompatActivity {
     ClientServer client;
+    Accelerometer acc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Accelerometer acc = new Accelerometer(getApplicationContext());
-                //startActivity(potholesIntent);
-                //String stringa = String.valueOf(someText.getText());
-                //sendMessageToServer(stringa);
+                //la parte dell'accelerometro andrebbe messa in photoles activity
+                //acc = new Accelerometer(getApplicationContext());
+                String stringa = String.valueOf(someText.getText());
+                sendMessageToServer(stringa);
+                //mandiamo l'username al server
             }
         });
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 client.setUp();
                 client.sendSomeMessage(stringa);
                 client.cleanUp();
+
             }
         });
 
