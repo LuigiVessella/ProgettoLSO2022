@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.main.Sensor.Accelerometer;
+
 public class PotholesActivity extends AppCompatActivity {
 
     TextView welcomeTv;
@@ -24,6 +26,7 @@ public class PotholesActivity extends AppCompatActivity {
         welcomeTv = findViewById(R.id.welcomeTextView);
         Log.v("verifica", getIntent().getStringExtra("user"));
         welcomeTv.setText("BENVENUTO " + getIntent().getStringExtra("user"));
+        Accelerometer acc = new Accelerometer(getApplicationContext(), PotholesActivity.this);
 
 
     }
