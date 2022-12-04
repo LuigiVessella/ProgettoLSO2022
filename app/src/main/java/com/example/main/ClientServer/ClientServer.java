@@ -4,7 +4,7 @@ import java.net.*;
 import java.util.Scanner;
 import java.io.*;
 
-public class ClientServer
+public class  ClientServer
 {
     private String host = null;
     private int port = 0;

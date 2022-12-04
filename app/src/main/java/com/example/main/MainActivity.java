@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.main.ClientServer.ClientServer;
 import com.example.main.Sensor.Accelerometer;
@@ -15,6 +16,7 @@ import com.example.main.Sensor.Accelerometer;
 public class MainActivity extends AppCompatActivity {
     ClientServer client;
     Accelerometer acc;
+    Intent activitySwitcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +44,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //la parte dell'accelerometro andrebbe messa in photoles activity
                 //acc = new Accelerometer(getApplicationContext());
-                String stringa = String.valueOf(someText.getText());
-                sendMessageToServer(stringa);
+                String userName = String.valueOf(someText.getText());
                 //mandiamo l'username al server
+                sendMessageToServer(userName);
+
+                switchActivity(userName);
             }
         });
+
+    }
+
+    private void switchActivity(String userName) {
+
+        Toast.makeText(this, "logged in", Toast.LENGTH_LONG).show();
+        activitySwitcher = new Intent(MainActivity.this, PotholesActivity.class);
+        activitySwitcher.putExtra("user", userName);
+        startActivity(activitySwitcher);
 
     }
 
@@ -57,15 +70,12 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 System.out.println("sono qui");
                 client.setUp();
-                client.sendSomeMessage(stringa);
+                client.sendSomeMessage("insert into utente (nome) values ('" + stringa +"')");
                 client.cleanUp();
 
             }
         });
 
         thread.start();
-
-
-
     }
 }
