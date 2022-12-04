@@ -23,7 +23,7 @@ public class PotholesActivity extends AppCompatActivity {
         Toast.makeText(this, "SONO QUI", Toast.LENGTH_LONG).show();
         welcomeTv = findViewById(R.id.welcomeTextView);
         Log.v("verifica", getIntent().getStringExtra("user"));
-       // welcomeTv.setText(getIntent().getStringExtra("user"));
+        welcomeTv.setText("BENVENUTO " + getIntent().getStringExtra("user"));
 
 
     }
