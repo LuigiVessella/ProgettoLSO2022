@@ -17,7 +17,7 @@ public class Gps {
     private Sensor accelerometer;
     private Context context;
     private Activity activity;
-    LocationManager lm;
+    private LocationManager lm;
     private final LocationListener mLocationListener;
 
     // The minimum distance to change Updates in meters
@@ -53,11 +53,5 @@ public class Gps {
         }
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,mLocationListener);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
-
     }
-
-
-
 }
