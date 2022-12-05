@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 public class PotholesActivity extends AppCompatActivity {
 
     private TextView welcomeTv;
+
+    //la documentazione di android consiglia di usare questo, non sembra funzionare al momento
     private FusedLocationProviderClient fusedLocationClient;
 
     @Override
@@ -33,11 +35,8 @@ public class PotholesActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_potholes);
 
-
-
         Toast.makeText(this, "SONO QUI", Toast.LENGTH_LONG).show();
         welcomeTv = findViewById(R.id.welcomeTextView);
-
 
         Log.v("verifica", getIntent().getStringExtra("user"));
         welcomeTv.setText("BENVENUTO " + getIntent().getStringExtra("user"));
@@ -47,6 +46,7 @@ public class PotholesActivity extends AppCompatActivity {
 
     }
 
+    //questa è la funzione che dovrebbe prendere la posizione
     @SuppressLint("MissingPermission")
     private void getLastLoc() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -54,8 +54,7 @@ public class PotholesActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    Log.v("lat:", String.valueOf(location.getLatitude()));
-                    Log.v("long", String.valueOf(location.getLongitude()));
+
                 }
             }
         });
