@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_main);
-        client = new ClientServer("4.236.136.210", 8080);
+        client = new ClientServer("192.168.1.14", 8080);
         initializeComponents();
     }
 
@@ -68,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("sono qui");
                 client.setUp();
-                client.sendSomeMessage("insert into utente (nome) values ('" + stringa +"')");
+                client.sendSomeMessage(stringa.trim());
                 client.cleanUp();
 
             }

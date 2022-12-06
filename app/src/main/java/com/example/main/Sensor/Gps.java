@@ -29,8 +29,6 @@ public class Gps {
         activity = a;
         initializeComponents();
         requestPermission();
-
-
     }
 
     private void getLastLoc() {
