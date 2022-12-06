@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/buttonGetPos"
         android:layout_width="186dp"
-        android:layout_height="39dp"
+        android:layout_height="48dp"
         android:layout_marginTop="72dp"
         android:text="Ottieni posizione"
         app:layout_constraintBottom_toBottomOf="parent"
