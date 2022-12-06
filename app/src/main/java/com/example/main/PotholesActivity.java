@@ -1,24 +1,14 @@
 package com.example.main;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.main.Sensor.Accelerometer;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.main.Sensor.Gps;
 
 public class PotholesActivity extends AppCompatActivity {
 
@@ -26,9 +16,9 @@ public class PotholesActivity extends AppCompatActivity {
     private Button buttonGetPos;
     private TextView latTv;
     private TextView longTv;
+    private Gps gps;
 
-    //la documentazione di android consiglia di usare questo, non sembra funzionare al momento
-    private FusedLocationProviderClient fusedLocationClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,49 +28,33 @@ public class PotholesActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
         }
         setContentView(R.layout.activity_potholes);
-        requestPermission();
+        initializeComponents();
 
 
+
+    }
+
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+    }
+
+    private void initializeComponents(){
         welcomeTv = findViewById(R.id.welcomeTextView);
         buttonGetPos = findViewById(R.id.buttonGetPos);
         latTv = findViewById(R.id.textViewLat);
         longTv = findViewById(R.id.textViewLong);
 
         welcomeTv.setText("Benvenuto, " + getIntent().getStringExtra("user"));
+        Gps gps = new Gps(getApplicationContext(), PotholesActivity.this);
 
         buttonGetPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getLastLoc();
+
+                gps.getPosition();
             }
         });
-        //Accelerometer acc = new Accelerometer(getApplicationContext(), PotholesActivity.this);
-    }
-
-    //questa è la funzione che dovrebbe prendere la posizione
-
-    private void getLastLoc() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //se non si hanno i permessi, li richiediamo.
-            requestPermission();
-            return;
-        }
-        fusedLocationClient.getLastLocation().addOnSuccessListener(PotholesActivity.this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    latTv.setText( "lat: " + String.valueOf(location.getLatitude()));
-                    longTv.setText("long: " + String.valueOf(location.getLongitude()));
-                }
-            }
-        });
-
-    }
-
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
 }

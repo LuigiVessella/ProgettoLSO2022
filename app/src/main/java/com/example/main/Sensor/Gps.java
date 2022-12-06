@@ -6,52 +6,75 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.util.Log;
-
+import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
+import com.example.main.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class Gps {
-
+    private TextView welcomeTv;
+    private TextView latTv;
+    private TextView longTv;
     private Sensor accelerometer;
     private Context context;
     private Activity activity;
-    private LocationManager lm;
-    private final LocationListener mLocationListener;
-
-    // The minimum distance to change Updates in meters
-    private static final int MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 1 metro
-
-    // The minimum time between updates in milliseconds
-    private static final int MIN_TIME_BW_UPDATES = 1000; // 1 second
+    private FusedLocationProviderClient fusedLocationClient;
 
 
     public Gps(Context c, Activity a) {
         context = c;
         activity = a;
-        lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        mLocationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(final Location location) {
-                //Qui rileva la latitudine e la longitudine
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                Log.d("latitude", String.valueOf(latitude));
-                Log.d("longitude", String.valueOf(longitude));
+        initializeComponents();
+        requestPermission();
 
-            }
-        };
-        checkPermissions();
+
     }
 
+    private void getLastLoc() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
 
-    private void checkPermissions(){
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //se non si hanno i permessi, li richiediamo.
+            requestPermission();
             return;
         }
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,mLocationListener);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        fusedLocationClient.getLastLocation().addOnSuccessListener(activity , new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    latTv.setText( "lat: " + String.valueOf(location.getLatitude()));
+                    longTv.setText("long: " + String.valueOf(location.getLongitude()));
+                    Log.d("LATITU: ", String.valueOf(location.getLatitude()));
+                    Log.d("LONGI: ",String.valueOf(location.getLongitude()));
+
+                }
+            }
+        });
+
     }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+    }
+
+    private void initializeComponents(){
+        welcomeTv =  activity.findViewById(R.id.welcomeTextView);
+        latTv = activity.findViewById(R.id.textViewLat);
+        longTv = activity.findViewById(R.id.textViewLong);
+
+    }
+
+    public void getPosition(){
+        getLastLoc();
+    }
+
+
+
+
+
+
+
 }

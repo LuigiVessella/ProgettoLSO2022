@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 //acc = new Accelerometer(getApplicationContext());
                 String userName = String.valueOf(someText.getText());
                 //mandiamo l'username al server
-                sendMessageToServer(userName);
+                //sendMessageToServer(userName);
 
                 switchActivity(userName);
             }

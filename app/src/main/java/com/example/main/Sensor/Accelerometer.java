@@ -12,15 +12,14 @@ import android.hardware.SensorManager;
 
 public class Accelerometer extends Application{
     private Sensor accelerometer;
-    private double accX;
+    private double accY;
     private Context context;
-    private double lastX = 0;
+    private double lastY = 0;
     private Activity activity;
 
 
     public Accelerometer(Context c, Activity a){
         activity = a;
-
         context = c;
         SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -28,9 +27,9 @@ public class Accelerometer extends Application{
         SensorEventListener sel = new SensorEventListener() {
 
             public void onSensorChanged(SensorEvent sEvent) {
-                accX = sEvent.values[0];
-                checkPothole(accX);
-                System.out.println("VALORE X " + accX);
+                accY = sEvent.values[1];
+                checkPothole(accY);
+                System.out.println("VALORE Y " + accY);
 
             }
 
@@ -41,13 +40,13 @@ public class Accelerometer extends Application{
     }
 
     public void checkPothole(double newValue){
-        if(lastX != 0 ){
-            if(Math.abs(newValue - lastX) >= 2){
+        if(lastY != 0 ){
+            if(Math.abs(newValue - lastY) >= 2){
                 System.out.println("BUCA RILEVATA");
-                Gps gps = new Gps(context, activity);
+                //Gps gps = new Gps(context, activity);
 
             }
         }
-        lastX = newValue;
+        lastY = newValue;
     }
 }
