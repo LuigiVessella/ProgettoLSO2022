@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_main);
-        client = new ClientServer("192.168.1.14", 8080);
+        client = new ClientServer("4.236.136.210", 8080);
         initializeComponents();
     }
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 //acc = new Accelerometer(getApplicationContext());
                 String userName = String.valueOf(someText.getText());
                 //mandiamo l'username al server
-                //sendMessageToServer(userName);
+                sendMessageToServer(userName);
 
                 switchActivity(userName);
             }

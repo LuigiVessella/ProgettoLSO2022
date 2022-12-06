@@ -18,8 +18,6 @@ public class PotholesActivity extends AppCompatActivity {
     private TextView longTv;
     private Gps gps;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +27,6 @@ public class PotholesActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_potholes);
         initializeComponents();
-
-
-
     }
 
 
