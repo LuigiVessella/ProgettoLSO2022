@@ -8,13 +8,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 
 public class Accelerometer extends Application{
     private Sensor accelerometer;
+    private double accX;
     private double accY;
+    private double accZ;
+    private double valueTest = 0;
     private Context context;
-    private double lastY = 0;
+    private double lastValue = 0;
     private Activity activity;
 
 
@@ -27,9 +31,12 @@ public class Accelerometer extends Application{
         SensorEventListener sel = new SensorEventListener() {
 
             public void onSensorChanged(SensorEvent sEvent) {
+                accX = sEvent.values[0];
                 accY = sEvent.values[1];
-                checkPothole(accY);
-                System.out.println("VALORE Y " + accY);
+                accZ = sEvent.values[2];
+                valueTest = Math.sqrt(accX + accY + accZ);
+                checkPothole(valueTest);
+                //System.out.println("VALORE NUOVO " + accZ);
 
             }
 
@@ -40,13 +47,24 @@ public class Accelerometer extends Application{
     }
 
     public void checkPothole(double newValue){
-        if(lastY != 0 ){
-            if(Math.abs(newValue - lastY) >= 2){
-                System.out.println("BUCA RILEVATA");
-                //Gps gps = new Gps(context, activity);
+        if(lastValue != 0 ){
+            if((lastValue - newValue) >= 2){
+                Log.d("Evento: ", "BUCA TROVATA");
+                Log.d("LAST VALUE ", String.valueOf(lastValue));
+                Log.d("NEW VALUE ", String.valueOf(newValue));
+
+                //Una volta rilevata la buca si ottengono le coordinate di essa.
+                //Qui c'è un problema di sincronizzazione, getLatitude viene restituita prima di aggiornare la latitude trovata.
+                Gps gps = new Gps(context, activity);
+                gps.getPosition();
+                double tmpLatitudePotholes = gps.getLatitude();
+                double tmpLongitudePotholes = gps.getLongitude();
+                Log.d("LATITUDE TROVATA: ", String.valueOf(tmpLatitudePotholes));
+                Log.d("LONGITUDE TROVATA: ", String.valueOf(tmpLongitudePotholes));
+
 
             }
         }
-        lastY = newValue;
+        lastValue = newValue;
     }
 }

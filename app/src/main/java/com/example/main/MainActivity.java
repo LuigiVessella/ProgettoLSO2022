@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 //mandiamo l'username al server
-                sendMessageToServer(userName);
+                //sendMessageToServer(userName);
 
                 switchActivity(userName);
             }
