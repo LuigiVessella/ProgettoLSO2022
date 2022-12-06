@@ -19,9 +19,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class Gps {
-    private TextView welcomeTv;
-    private TextView latTv;
-    private TextView longTv;
+
     private Sensor accelerometer;
     private Context context;
     private Activity activity;
@@ -35,7 +33,6 @@ public class Gps {
     public Gps(Context c, Activity a) {
         context = c;
         activity = a;
-        initializeComponents();
         requestPermission();
     }
 
@@ -47,7 +44,6 @@ public class Gps {
             requestPermission();
             return;
         }
-
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -62,11 +58,6 @@ public class Gps {
                     if (location != null) {
                         latitudeDetected = location.getLatitude();
                         longitudeDetected = location.getLongitude();
-                        latTv.setText( "lat: " + String.valueOf(latitudeDetected));
-                        longTv.setText("long: " + String.valueOf(longitudeDetected));
-                        //Log.d("LATITUDE: ", String.valueOf(latitudeDetected));
-                        //Log.d("LONGITUDE: ", String.valueOf(longitudeDetected));
-
                     }
                 }
             }
@@ -78,11 +69,6 @@ public class Gps {
                 if (location != null) {
                     latitudeDetected = location.getLatitude();
                     longitudeDetected = location.getLongitude();
-                    latTv.setText( "lat: " + String.valueOf(latitudeDetected));
-                    longTv.setText("long: " + String.valueOf(longitudeDetected));
-                    //Log.d("LATITU: ", String.valueOf(location.getLatitude()));
-                    //Log.d("LONGI: ",String.valueOf(location.getLongitude()));
-
                 }
                 else{
                     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -101,29 +87,10 @@ public class Gps {
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
-    private void initializeComponents(){
-        welcomeTv =  activity.findViewById(R.id.welcomeTextView);
-        latTv = activity.findViewById(R.id.textViewLat);
-        longTv = activity.findViewById(R.id.textViewLong);
-
-    }
 
     public void getPosition(){
         getLastLoc();
     }
-
-    public double getLatitude(){
-        return latitudeDetected;
-    }
-    public double getLongitude(){
-        return longitudeDetected;
-    }
-
-
-
-
-
-
 
 
 

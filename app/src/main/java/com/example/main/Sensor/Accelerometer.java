@@ -10,6 +10,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import com.example.main.PotholesActivity;
+
 
 public class Accelerometer extends Application{
     private Sensor accelerometer;
@@ -20,6 +22,7 @@ public class Accelerometer extends Application{
     private Context context;
     private double lastValue = 0;
     private Activity activity;
+
 
 
     public Accelerometer(Context c, Activity a){
@@ -35,9 +38,8 @@ public class Accelerometer extends Application{
                 accY = sEvent.values[1];
                 accZ = sEvent.values[2];
                 valueTest = Math.sqrt(accX + accY + accZ);
-                checkPothole(valueTest);
+                checkPothole(valueTest, (PotholesActivity) activity);
                 //System.out.println("VALORE NUOVO " + accZ);
-
             }
 
             public void onAccuracyChanged(Sensor sensor, int accuracy) {}
@@ -46,7 +48,10 @@ public class Accelerometer extends Application{
 
     }
 
-    public void checkPothole(double newValue){
+    public void checkPothole(double newValue, PotholesActivity act){
+        Gps gps = new Gps(context, activity);
+        gps.getPosition();
+
         if(lastValue != 0 ){
             if((lastValue - newValue) >= 2){
                 Log.d("Evento: ", "BUCA TROVATA");
@@ -54,17 +59,11 @@ public class Accelerometer extends Application{
                 Log.d("NEW VALUE ", String.valueOf(newValue));
 
                 //Una volta rilevata la buca si ottengono le coordinate di essa.
-                //Qui c'è un problema di sincronizzazione, getLatitude viene restituita prima di aggiornare la latitude trovata.
-                Gps gps = new Gps(context, activity);
-                gps.getPosition();
-                double tmpLatitudePotholes = gps.getLatitude();
-                double tmpLongitudePotholes = gps.getLongitude();
-                Log.d("LATITUDE TROVATA: ", String.valueOf(tmpLatitudePotholes));
-                Log.d("LONGITUDE TROVATA: ", String.valueOf(tmpLongitudePotholes));
-
+                act.setCoordinate();
+                }
 
             }
-        }
+
         lastValue = newValue;
     }
 }

@@ -25,7 +25,7 @@
         android:layout_width="186dp"
         android:layout_height="48dp"
         android:layout_marginTop="72dp"
-        android:text="Ottieni posizione"
+        android:text="Registrazione"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.264"
@@ -43,10 +43,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
+        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonGetPos"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintVertical_bias="0.258" />
 
     <TextView
         android:id="@+id/textViewLong"
@@ -61,6 +61,18 @@
         app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLat"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.108" />
+
+    <TextView
+        android:id="@+id/textViewBuca"
+        android:layout_width="148dp"
+        android:layout_height="26dp"
+        android:text="tutto calmo qui"
+        app:layout_constraintBottom_toTopOf="@+id/textViewLat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.133"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGetPos"
+        app:layout_constraintVertical_bias="0.595" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

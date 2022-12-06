@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 //sendMessageToServer(userName);
 
                 switchActivity(userName);
+
             }
         });
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         activitySwitcher = new Intent(MainActivity.this, PotholesActivity.class);
         activitySwitcher.putExtra("user", userName);
         startActivity(activitySwitcher);
+        finish();
 
     }
 
