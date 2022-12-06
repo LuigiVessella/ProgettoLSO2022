@@ -66,7 +66,7 @@ public class PotholesActivity extends AppCompatActivity {
     }
 
     public void setCoordinate() {
-        CancellationTokenSource cts = new CancellationTokenSource();
+
         bucaTv.setText("buca rilevata presso:");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -80,17 +80,29 @@ public class PotholesActivity extends AppCompatActivity {
                         if (location != null) {
                             latTv.setText(String.valueOf(location.getLatitude()));
                             longTv.setText(String.valueOf(location.getLongitude()));
+                            return;
                         }
+                        else getCurrentPosIfNotLast();
                     }
                 });
+    }
 
-        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.getToken())
+    private void getCurrentPosIfNotLast() {
+        CancellationTokenSource cts = new CancellationTokenSource();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, cts.getToken())
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
                             latTv.setText(String.valueOf(location.getLatitude()));
                             longTv.setText(String.valueOf(location.getLongitude()));
+                            return;
                         }
                     }
                 });
