@@ -11,19 +11,20 @@
 
     <TextView
         android:id="@+id/welcomeTV"
-        android:layout_width="347dp"
-        android:layout_height="94dp"
+        android:layout_width="303dp"
+        android:layout_height="113dp"
         android:fontFamily="sans-serif-black"
-        android:text="Welcome to potholes"
+        android:text="Photoles, l'app che segnala le buche!"
+        android:textAlignment="textStart"
         android:textColor="#153DDF"
         android:textColorHint="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.199" />
+        app:layout_constraintVertical_bias="0.198" />
 
     <Button
         android:id="@+id/loginButton"
@@ -38,11 +39,11 @@
         android:text="SIGN IN"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
+        app:layout_constraintHorizontal_bias="0.413"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailLoginLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailLoginLayout"
@@ -74,9 +75,26 @@
             android:id="@+id/emailLoginEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:fontFamily="sans-serif-light"
             android:hint="Your username" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="per iniziare, inserisci l'username senza spazi"
+        android:textAllCaps="false"
+        android:textColor="#03A9F4"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/emailLoginLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTV"
+        app:layout_constraintVertical_bias="0.692" />
     />
 </androidx.constraintlayout.widget.ConstraintLayout>
