@@ -40,6 +40,35 @@
         app:layout_constraintVertical_bias="0.193" />
 
     <TextView
+        android:id="@+id/textViewList"
+        android:layout_width="276dp"
+        android:layout_height="23dp"
+        android:fontFamily="sans-serif"
+        android:text="clicca qui per visualizzare le buche vicine!"
+        android:textStyle="bold|italic"
+        android:textColor="#03A9F4"
+        app:layout_constraintBottom_toTopOf="@+id/textViewIntro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
+        app:layout_constraintVertical_bias="0.504" />
+
+    <Button
+        android:id="@+id/buttonGoToList"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="179dp"
+        android:layout_height="42dp"
+        android:backgroundTint="#99122FD6"
+        android:text="Avanti"
+        android:textColorHighlight="#072BEF"
+        app:layout_constraintBottom_toTopOf="@+id/textViewIntro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.418"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewList" />
+
+    <TextView
         android:id="@+id/textViewBuca"
         android:layout_width="148dp"
         android:layout_height="26dp"
@@ -71,9 +100,9 @@
     <ScrollView
         android:id="@+id/scrollView2"
         style="@android:style/Widget.Material.ScrollView"
-        android:layout_width="273dp"
-        android:layout_height="168dp"
-        android:background="#5C53D9EA"
+        android:layout_width="246dp"
+        android:layout_height="131dp"
+        android:background="#FAFAFDFD"
         android:fadeScrollbars="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
