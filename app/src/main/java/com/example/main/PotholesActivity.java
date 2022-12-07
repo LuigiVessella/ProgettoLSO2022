@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -26,11 +27,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class PotholesActivity extends AppCompatActivity {
     private TextView welcomeTv;
-    private Button buttonGetPos;
+    private Button buttonGetPos, visualizzaBtn;
+    private Intent nextActivity;
     private TextView latTv;
     private TextView longTv;
     private TextView bucaTv;
-    private Gps gps;
     private LinearLayout registrazioniSv;
     private FusedLocationProviderClient fusedLocationClient;
     private Integer counter;
@@ -50,10 +51,8 @@ public class PotholesActivity extends AppCompatActivity {
         welcomeTv = findViewById(R.id.welcomeTextView);
         buttonGetPos = findViewById(R.id.buttonGetPos);
         registrazioniSv = findViewById(R.id.linearScroll);
-
         bucaTv = findViewById(R.id.textViewBuca);
-        Gps gps = new Gps(getApplicationContext(), PotholesActivity.this);
-
+        visualizzaBtn = findViewById(R.id.buttonVisualizza);
         welcomeTv.setText("Benvenuto, " + getIntent().getStringExtra("user"));
         counter = 0;
         buttonGetPos.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +61,15 @@ public class PotholesActivity extends AppCompatActivity {
                 Accelerometer acc = new Accelerometer(getApplicationContext(), PotholesActivity.this);
                 buttonGetPos.setText("RILEVANDO...");
                 buttonGetPos.setTextColor(Color.GREEN);
+            }
+        });
+
+        visualizzaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextActivity = new Intent(PotholesActivity.this, GetRecords.class);
+                //nextActivity.putExtra("user", userName);
+                startActivity(nextActivity);
             }
         });
     }

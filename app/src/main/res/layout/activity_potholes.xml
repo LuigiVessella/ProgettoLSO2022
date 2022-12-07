@@ -55,12 +55,12 @@
         app:layout_constraintVertical_bias="0.504" />
 
     <Button
-        android:id="@+id/buttonGoToList"
+        android:id="@+id/buttonVisualizza"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="179dp"
-        android:layout_height="42dp"
+        android:layout_height="48dp"
         android:backgroundTint="#99122FD6"
-        android:text="Avanti"
+        android:text="Visualizza"
         android:textColorHighlight="#072BEF"
         app:layout_constraintBottom_toTopOf="@+id/textViewIntro"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,6 +103,7 @@
         android:layout_width="246dp"
         android:layout_height="131dp"
         android:background="#FAFAFDFD"
+        android:contentDescription="@string/appbar_scrolling_view_behavior"
         android:fadeScrollbars="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
