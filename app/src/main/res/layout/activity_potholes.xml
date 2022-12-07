@@ -12,7 +12,10 @@
         android:id="@+id/welcomeTextView"
         android:layout_width="259dp"
         android:layout_height="52dp"
+        android:fontFamily="sans-serif-black"
         android:textSize="20sp"
+        android:textAlignment="textStart"
+        android:textColor="#153DDF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.154"
@@ -22,16 +25,19 @@
 
     <Button
         android:id="@+id/buttonGetPos"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="186dp"
         android:layout_height="48dp"
         android:layout_marginTop="72dp"
+        android:backgroundTint="#99122FD6"
         android:text="Registrazione"
+        android:textColorHighlight="#072BEF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.264"
+        app:layout_constraintHorizontal_bias="0.431"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.193" />
 
     <TextView
         android:id="@+id/textViewLat"
@@ -43,10 +49,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonGetPos"
-        app:layout_constraintVertical_bias="0.258" />
+        app:layout_constraintVertical_bias="0.37" />
 
     <TextView
         android:id="@+id/textViewLong"
@@ -61,18 +67,33 @@
         app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLat"
-        app:layout_constraintVertical_bias="0.108" />
+        app:layout_constraintVertical_bias="0.32" />
 
     <TextView
         android:id="@+id/textViewBuca"
         android:layout_width="148dp"
         android:layout_height="26dp"
         android:text="tutto calmo qui"
+        android:textColor="#03A9F4"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/textViewLat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonGetPos"
-        app:layout_constraintVertical_bias="0.595" />
+        app:layout_constraintVertical_bias="0.354" />
+
+    <TextView
+        android:id="@+id/textViewIntro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clicca qui per avviare la rilevazione delle buche!"
+        android:textColor="#03A9F4"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGetPos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
+        app:layout_constraintVertical_bias="0.913" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
