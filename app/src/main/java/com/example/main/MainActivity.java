@@ -15,9 +15,13 @@ import com.example.main.ClientServer.ClientServer;
 import com.example.main.Sensor.Accelerometer;
 
 public class MainActivity extends AppCompatActivity {
-    ClientServer client;
-    Accelerometer acc;
-    Intent activitySwitcher;
+    private ClientServer client;
+    private Accelerometer acc;
+    private Intent activitySwitcher;
+    private Button btnSignin, visualizzaButton, registraButton;
+    private Intent potholesIntent;
+    private EditText someText;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,29 +39,45 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void initializeComponents(){
-        Button btnSignin = findViewById(R.id.loginButton);
-        Intent potholesIntent = new Intent(this, PotholesActivity.class);
-        EditText someText = findViewById(R.id.emailLoginEditText);
+
+        btnSignin = findViewById(R.id.loginButton2);
+        potholesIntent = new Intent(this, PotholesActivity.class);
+        someText = findViewById(R.id.emailLoginEditText);
+        visualizzaButton = findViewById(R.id.visualizzaButton);
+        registraButton = findViewById(R.id.registraButton);
+        visualizzaButton.setEnabled(false);
+        registraButton.setEnabled(false);
 
         //Action after sign in
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //la parte dell'accelerometro andrebbe messa in photoles activity
-                //acc = new Accelerometer(getApplicationContext());
-                String userName = String.valueOf(someText.getText());
-                if(TextUtils.isEmpty(userName)){
-                    someText.setError("devi inserire un nome!");
+
+                userName = String.valueOf(someText.getText() );
+                if(TextUtils.isEmpty(userName) || userName.length() < 3){
+                    someText.setError("inserisci un nome valido!");
                     return;
                 }
                 //mandiamo l'username al server
                 //sendMessageToServer(userName);
-
-                switchActivity(userName);
-
+                else visualizzaBottoni();
             }
         });
 
+    }
+
+    private void visualizzaBottoni(){
+        visualizzaButton.setEnabled(true);
+        registraButton.setEnabled(true);
+
+        registraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchActivity(userName);
+            }
+        });
+
+        return;
     }
 
     private void switchActivity(String userName) {
