@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private ClientServer client;
     private Accelerometer acc;
     private Intent activitySwitcher;
-    private Button btnSignin, visualizzaButton, registraButton;
+    private Button btnSignin;
     private Intent potholesIntent;
     private EditText someText;
     private String userName;
@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity {
         btnSignin = findViewById(R.id.loginButton2);
         potholesIntent = new Intent(this, PotholesActivity.class);
         someText = findViewById(R.id.emailLoginEditText);
-        visualizzaButton = findViewById(R.id.visualizzaButton);
-        registraButton = findViewById(R.id.registraButton);
-        visualizzaButton.setEnabled(false);
-        registraButton.setEnabled(false);
 
         //Action after sign in
         btnSignin.setOnClickListener(new View.OnClickListener() {
@@ -60,25 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //mandiamo l'username al server
                 //sendMessageToServer(userName);
-                else visualizzaBottoni();
-            }
-        });
-
-    }
-
-    private void visualizzaBottoni(){
-        visualizzaButton.setEnabled(true);
-        registraButton.setEnabled(true);
-
-        registraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 switchActivity(userName);
             }
         });
 
-        return;
     }
+
 
     private void switchActivity(String userName) {
 
