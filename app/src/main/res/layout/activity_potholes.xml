@@ -13,9 +13,9 @@
         android:layout_width="259dp"
         android:layout_height="52dp"
         android:fontFamily="sans-serif-black"
-        android:textSize="20sp"
         android:textAlignment="textStart"
         android:textColor="#153DDF"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.154"
@@ -40,48 +40,19 @@
         app:layout_constraintVertical_bias="0.193" />
 
     <TextView
-        android:id="@+id/textViewLat"
-        android:layout_width="150dp"
-        android:layout_height="42dp"
-        android:text="Latitudine"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#3F51B5"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.134"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGetPos"
-        app:layout_constraintVertical_bias="0.37" />
-
-    <TextView
-        android:id="@+id/textViewLong"
-        android:layout_width="150dp"
-        android:layout_height="42dp"
-        android:text="Longitudine"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#3F51B5"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.126"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLat"
-        app:layout_constraintVertical_bias="0.32" />
-
-    <TextView
         android:id="@+id/textViewBuca"
         android:layout_width="148dp"
         android:layout_height="26dp"
+        android:layout_marginTop="28dp"
         android:text="tutto calmo qui"
         android:textColor="#03A9F4"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/textViewLat"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.133"
+        app:layout_constraintHorizontal_bias="0.091"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonGetPos"
-        app:layout_constraintVertical_bias="0.354" />
+        app:layout_constraintVertical_bias="0.333" />
 
     <TextView
         android:id="@+id/textViewIntro"
@@ -92,8 +63,30 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/buttonGetPos"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.386"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
-        app:layout_constraintVertical_bias="0.913" />
+        app:layout_constraintVertical_bias="0.9" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        style="@android:style/Widget.Material.ScrollView"
+        android:layout_width="273dp"
+        android:layout_height="168dp"
+        android:background="#5C53D9EA"
+        android:fadeScrollbars="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGetPos"
+        app:layout_constraintVertical_bias="0.379">
+
+        <LinearLayout
+            android:id="@+id/linearScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
