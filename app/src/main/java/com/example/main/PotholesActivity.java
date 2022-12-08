@@ -64,7 +64,7 @@ public class PotholesActivity extends AppCompatActivity {
         visualizzaBtn = findViewById(R.id.buttonVisualizza);
         userName = getIntent().getStringExtra("user");
         welcomeTv.setText("Benvenuto, " + userName);
-        newSock = new ClientServer("192.168.1.14", 8080);
+        newSock = new ClientServer("4.236.136.210", 8080);
 
         counter = 0;
         buttonGetPos.setOnClickListener(new View.OnClickListener() {
