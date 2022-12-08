@@ -1,17 +1,17 @@
 package com.example.main.EntityClasses;
 
-import java.sql.Time;
+
 import java.util.Date;
 
 public class Pothole {
     private String username;
-    private Time time;
-    private Date date;
+    private String time;
+    private String date;
     private Double latitude;
     private Double longitude;
     private Double differenceY;
 
-    public Pothole(String username, Time time, Date date, Double latitude, Double longitude, Double differenceY) {
+    public Pothole(String username, String time, String date, Double latitude, Double longitude, Double differenceY) {
         this.username = username;
         this.time = time;
         this.date = date;
@@ -28,19 +28,19 @@ public class Pothole {
         this.username = username;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -4,18 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroung2"
     tools:context=".GetRecords">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="142dp"
-        android:layout_height="87dp"
-        android:text="Ciao"
+        android:id="@+id/textViewVisualizePotholes"
+        android:layout_width="283dp"
+        android:layout_height="66dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Ecco le buche vicino a te!"
+        android:textColor="#153DDF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.087" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPoth"
+        android:layout_width="320dp"
+        android:layout_height="276dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.323" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="170dp"
+        android:layout_height="54dp"
+        android:backgroundTint="#99122FD6"
+        android:text="Indietro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.663" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

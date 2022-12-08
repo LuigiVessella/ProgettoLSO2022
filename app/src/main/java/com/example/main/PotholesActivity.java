@@ -14,13 +14,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.main.ClientServer.ClientServer;
 import com.example.main.Sensor.Accelerometer;
-import com.example.main.Sensor.Gps;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
@@ -72,7 +70,7 @@ public class PotholesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Accelerometer acc = new Accelerometer(getApplicationContext(), PotholesActivity.this);
                 buttonGetPos.setText("RILEVANDO...");
-                buttonGetPos.setTextColor(Color.GREEN);
+                buttonGetPos.setTextColor(Color.WHITE);
             }
         });
 
