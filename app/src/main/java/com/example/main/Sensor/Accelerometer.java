@@ -49,17 +49,18 @@ public class Accelerometer extends Application{
     }
 
     public void checkPothole(double newValue, PotholesActivity act){
+        double variazione = 0;
         Gps gps = new Gps(context, activity);
         gps.getPosition();
 
         if(lastValue != 0 ){
-            if((lastValue - newValue) >= 2){
+            if((variazione = lastValue - newValue) >= 2){
                 Log.d("Evento: ", "BUCA TROVATA");
                 Log.d("LAST VALUE ", String.valueOf(lastValue));
                 Log.d("NEW VALUE ", String.valueOf(newValue));
 
                 //Una volta rilevata la buca si ottengono le coordinate di essa.
-                act.setCoordinate();
+                act.setCoordinate(variazione);
                 }
 
             }

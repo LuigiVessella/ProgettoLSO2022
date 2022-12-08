@@ -1,5 +1,7 @@
 package com.example.main.ClientServer;
 
+import android.util.Log;
+
 import java.net.*;
 import java.util.Scanner;
 import java.io.*;
@@ -43,6 +45,7 @@ public class  ClientServer
 
     public void sendSomeMessage(String stringa) {
         try {
+            Log.v("sto inviando: ", stringa);
             ostream = socket.getOutputStream();
             pwrite = new PrintWriter(ostream, true);
             pwrite.println(stringa);

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.main.ClientServer.ClientServer;
 import com.example.main.Sensor.Accelerometer;
 import com.example.main.Sensor.Gps;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -24,6 +26,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PotholesActivity extends AppCompatActivity {
     private TextView welcomeTv;
@@ -35,6 +40,10 @@ public class PotholesActivity extends AppCompatActivity {
     private LinearLayout registrazioniSv;
     private FusedLocationProviderClient fusedLocationClient;
     private Integer counter;
+    private String userName;
+    private String latidutine;
+    private String longitudine;
+    private ClientServer newSock;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +62,10 @@ public class PotholesActivity extends AppCompatActivity {
         registrazioniSv = findViewById(R.id.linearScroll);
         bucaTv = findViewById(R.id.textViewBuca);
         visualizzaBtn = findViewById(R.id.buttonVisualizza);
-        welcomeTv.setText("Benvenuto, " + getIntent().getStringExtra("user"));
+        userName = getIntent().getStringExtra("user");
+        welcomeTv.setText("Benvenuto, " + userName);
+        newSock = new ClientServer("192.168.1.14", 8080);
+
         counter = 0;
         buttonGetPos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +86,9 @@ public class PotholesActivity extends AppCompatActivity {
         });
     }
 
-    public void setCoordinate() {
+    public void setCoordinate(double variazione) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         counter++;
         bucaTv.setText("buca rilevata presso:");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -89,16 +103,21 @@ public class PotholesActivity extends AppCompatActivity {
                         if (location != null) {
                             latTv = new TextView(PotholesActivity.this);
                             longTv = new TextView(PotholesActivity.this);
-                            latTv.setText("trovata " + counter + " buca\n"+ "lat:" + String.valueOf(location.getLatitude()));
-                            longTv.setText("long: " + String.valueOf(location.getLongitude()) + "\n");
+                            latidutine = String.valueOf(location.getLatitude());
+                            longitudine = String.valueOf(location.getLongitude());
+                            latTv.setText("trovata " + counter + " buca\n"+ "lat:" + latidutine);
+                            longTv.setText("long: " + longitudine+ "\n");
                             registrazioniSv.addView(latTv);
                             registrazioniSv.addView(longTv);
-
-                            return;
                         }
                         else getCurrentPosIfNotLast();
                     }
                 });
+        if(latidutine != null && longitudine != null) {
+            String query = "insert into rilevazionebuca values('" + userName + "', '" + now + "'," + latidutine + ", " + longitudine + ", " + variazione + ")";
+            Log.v("query:", query);
+            sendQueryToServer(query);
+        }
     }
 
     private void getCurrentPosIfNotLast() {
@@ -117,18 +136,35 @@ public class PotholesActivity extends AppCompatActivity {
                             Toast.makeText(PotholesActivity.this, "CURRENT POS", Toast.LENGTH_SHORT).show();
                             latTv = new TextView(PotholesActivity.this);
                             longTv = new TextView(PotholesActivity.this);
-                            latTv.setText("trovata " + counter + " buca\n"+ "lat:" + String.valueOf(location.getLatitude()));
-                            longTv.setText("long: " + String.valueOf(location.getLongitude()));
+                            latidutine = String.valueOf(location.getLatitude());
+                            longitudine = String.valueOf(location.getLongitude());
+                            latTv.setText("trovata " + counter + " buca\n"+ "lat:" + latidutine);
+                            longTv.setText("long: " + longitudine+ "\n");
                             registrazioniSv.addView(latTv);
                             registrazioniSv.addView(longTv);
-                            return;
                         }
                     }
                 });
     }
 
-    private void sendQueryToServer(){
+    private void sendQueryToServer(String query){
         //qui il codice per mandare la query al server
+        final Handler handler = new Handler();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                newSock.setUp();
+                newSock.sendSomeMessage(query);
+                //client.cleanUp();
+            }
+        });
 
+        thread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        newSock.cleanUp();
     }
 }
