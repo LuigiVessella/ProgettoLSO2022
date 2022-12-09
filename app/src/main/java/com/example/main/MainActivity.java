@@ -15,7 +15,7 @@ import com.example.main.ClientServer.ClientServer;
 import com.example.main.Sensor.Accelerometer;
 
 public class MainActivity extends AppCompatActivity {
-    public static final ClientServer client = new ClientServer("192.168.1.14", 8080);;
+    public static final ClientServer client = new ClientServer("4.236.136.210", 8080);;
     private Accelerometer acc;
     private Intent activitySwitcher;
     private Button btnSignin;
