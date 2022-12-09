@@ -23,6 +23,8 @@ public class GetRecords extends AppCompatActivity {
     private RecyclerView reciclerPotholesView;
     private Button btnBack;
     private String query;
+    private ArrayList<Pothole> listPotholes = new ArrayList<>();
+
 
     //ecco l'array riempito con i risultati
     private ArrayList<String> getResult;
@@ -53,7 +55,7 @@ public class GetRecords extends AppCompatActivity {
 
 
 
-
+        setString("luigi 2022-12-0941.295457214.3299172.836057685946772");
         query = "select * from rilevazionebuca";
         sendQueryToServer(query);
 
@@ -69,11 +71,16 @@ public class GetRecords extends AppCompatActivity {
                 MainActivity.client.sendSomeMessage(query);
                 //qua metto i risultati nel nostro arrayList
                 getResult =  MainActivity.client.converse();
-                System.out.println("sto qua");
-                System.out.println("ho: " + getResult.get(2));
+                getResult.remove(0);
+                getResult.remove(0);;
+                for(String s : getResult){
+                    Pothole tmpPoth = setString(s);
+                    listPotholes.add(tmpPoth);
+                }
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        setText();
 
                     }
                 });
@@ -85,16 +92,22 @@ public class GetRecords extends AppCompatActivity {
 
     private void setText() {
         //ArrayList di prova
-        ArrayList<Pothole> listPotholes = new ArrayList<>();
-        Pothole tmpPot = new Pothole("Mario", "20:30", "2020-10-10", 40.234, 42.234, 2.01);
-        Pothole tmpPot2 = new Pothole("Mario", "20:30", "2020-10-10", 40.234, 42.234, 2.01);
-        listPotholes.add(tmpPot);
-        listPotholes.add(tmpPot2);
         reciclerPotholesView = findViewById(R.id.recyclerViewPoth);
         reciclerPotholesView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         PotholesAdapter potholesAdapter = new PotholesAdapter(getApplicationContext(), listPotholes);
         reciclerPotholesView.setAdapter(potholesAdapter);
         reciclerPotholesView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
+
+    }
+
+    public Pothole setString(String string){
+        String[] tmpString = string.split(" ", 2);
+        String nameUser = tmpString[0];
+        String data = tmpString[1].substring(0, 10);
+        String latitude = tmpString[1].substring(10, 20);
+        String longitude = tmpString[1].substring(20, 29);
+        Pothole potholeToReturn = new Pothole(nameUser, " ", data, Double.parseDouble(latitude) , Double.parseDouble(longitude), 2.1);
+        return potholeToReturn;
 
     }
 }
