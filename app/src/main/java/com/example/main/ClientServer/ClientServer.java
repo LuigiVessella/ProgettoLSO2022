@@ -58,6 +58,7 @@ public class  ClientServer
 
     public ArrayList<String> converse()
     {
+        //ricevo i record dal server
         System.out.println("TalkToC.converse() invoked");
         ArrayList<String> records = new ArrayList<>();
         String line;

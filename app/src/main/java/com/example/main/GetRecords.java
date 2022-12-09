@@ -23,6 +23,8 @@ public class GetRecords extends AppCompatActivity {
     private RecyclerView reciclerPotholesView;
     private Button btnBack;
     private String query;
+
+    //ecco l'array riempito con i risultati
     private ArrayList<String> getResult;
 
     @Override
@@ -65,14 +67,13 @@ public class GetRecords extends AppCompatActivity {
             public void run() {
                 MainActivity.client.setUp();
                 MainActivity.client.sendSomeMessage(query);
+                //qua metto i risultati nel nostro arrayList
                 getResult =  MainActivity.client.converse();
                 System.out.println("sto qua");
                 System.out.println("ho: " + getResult.get(2));
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-
-
 
                     }
                 });
