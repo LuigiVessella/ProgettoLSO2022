@@ -83,6 +83,7 @@ public class PotholesActivity extends AppCompatActivity {
                 //nextActivity.putExtra("user", userName);
                 startActivity(nextActivity);
                 buttonGetPos.setText("Registrazione");
+                finish();
             }
         });
     }

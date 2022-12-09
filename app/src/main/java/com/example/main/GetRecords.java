@@ -50,6 +50,7 @@ public class GetRecords extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(GetRecords.this, PotholesActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -81,7 +82,6 @@ public class GetRecords extends AppCompatActivity {
                     @Override
                     public void run() {
                         setText();
-
                     }
                 });
             }
