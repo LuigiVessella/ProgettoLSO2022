@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnSignin;
     private Intent potholesIntent;
     private EditText someText;
-    private String userName;
+    public static String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 client.setUp();
-               // client.sendSomeMessage(stringa.trim());
+                client.sendSomeMessage(stringa.trim());
                 //client.cleanUp();
 
             }

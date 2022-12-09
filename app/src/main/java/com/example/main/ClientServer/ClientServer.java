@@ -15,6 +15,7 @@ public class  ClientServer
     private OutputStream ostream = null;
     private PrintWriter pwrite = null;
 
+
     public ClientServer(String host, int port){
         this.host = host;
         this.port = port;

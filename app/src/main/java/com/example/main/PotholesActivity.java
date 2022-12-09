@@ -38,7 +38,7 @@ public class PotholesActivity extends AppCompatActivity {
     private LinearLayout registrazioniSv;
     private FusedLocationProviderClient fusedLocationClient;
     private Integer counter;
-    private String userName;
+    private String userName = MainActivity.userName;
     private double  latidutine = 0;
     private double longitudine = 0;
     //lo dichiariamo static e final, così sarà comune a tutte le classi
@@ -62,7 +62,6 @@ public class PotholesActivity extends AppCompatActivity {
         registrazioniSv = findViewById(R.id.linearScroll);
         bucaTv = findViewById(R.id.textViewBuca);
         visualizzaBtn = findViewById(R.id.buttonVisualizza);
-        userName = getIntent().getStringExtra("user") + " ";
         welcomeTv.setText("Benvenuto, " + userName);
 
 
@@ -80,7 +79,7 @@ public class PotholesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 nextActivity = new Intent(PotholesActivity.this, GetRecords.class);
-                //nextActivity.putExtra("user", userName);
+
                 startActivity(nextActivity);
                 buttonGetPos.setText("Registrazione");
                 finish();

@@ -74,7 +74,7 @@ public class PotholesAdapter extends RecyclerView.Adapter<PotholesAdapter.Pothol
             longitudeTextView.setText(tmpPothole.getLongitude().toString());
             latitudeTextView.setText(tmpPothole.getLatitude().toString());
             userTextView.setText(tmpPothole.getUsername());
-            cityTextView.setText(getCity(tmpPothole.getLatitude(), tmpPothole.getLongitude()));
+            cityTextView.setText(getCity(tmpPothole.getLatitude(), tmpPothole.getLongitude()) +"\n");
         }
 
         private String getCity(double lat, double longit) {
