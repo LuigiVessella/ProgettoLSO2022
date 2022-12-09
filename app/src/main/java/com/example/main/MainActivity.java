@@ -15,7 +15,7 @@ import com.example.main.ClientServer.ClientServer;
 import com.example.main.Sensor.Accelerometer;
 
 public class MainActivity extends AppCompatActivity {
-    private ClientServer client;
+    public static final ClientServer client = new ClientServer("192.168.1.14", 8080);;
     private Accelerometer acc;
     private Intent activitySwitcher;
     private Button btnSignin;
@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_main);
-        client = new ClientServer("4.236.136.210", 8080);
         initializeComponents();
     }
 
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 //mandiamo l'username al server
-                //sendMessageToServer(userName);
+                sendMessageToServer(userName);
                 switchActivity(userName);
             }
         });
@@ -79,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 client.setUp();
-                client.sendSomeMessage(stringa.trim());
-                client.cleanUp();
+               // client.sendSomeMessage(stringa.trim());
+                //client.cleanUp();
 
             }
         });

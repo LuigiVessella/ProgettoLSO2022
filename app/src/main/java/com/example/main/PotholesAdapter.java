@@ -68,5 +68,7 @@ public class PotholesAdapter extends RecyclerView.Adapter<PotholesAdapter.Pothol
             timeTextView.setText(tmpPothole.getTime());
         }
     }
+
+
 }
 

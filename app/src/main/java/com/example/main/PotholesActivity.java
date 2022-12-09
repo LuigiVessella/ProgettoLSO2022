@@ -39,9 +39,11 @@ public class PotholesActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private Integer counter;
     private String userName;
-    private String latidutine;
-    private String longitudine;
-    private ClientServer newSock;
+    private double  latidutine = 0;
+    private double longitudine = 0;
+    //lo dichiariamo static e final, così sarà comune a tutte le classi
+    //public static final ClientServer newSock = new ClientServer("192.168.1.14", 8080);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +62,9 @@ public class PotholesActivity extends AppCompatActivity {
         registrazioniSv = findViewById(R.id.linearScroll);
         bucaTv = findViewById(R.id.textViewBuca);
         visualizzaBtn = findViewById(R.id.buttonVisualizza);
-        userName = getIntent().getStringExtra("user");
+        userName = getIntent().getStringExtra("user") + " ";
         welcomeTv.setText("Benvenuto, " + userName);
-        newSock = new ClientServer("4.236.136.210", 8080);
+
 
         counter = 0;
         buttonGetPos.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +82,7 @@ public class PotholesActivity extends AppCompatActivity {
                 nextActivity = new Intent(PotholesActivity.this, GetRecords.class);
                 //nextActivity.putExtra("user", userName);
                 startActivity(nextActivity);
+                buttonGetPos.setText("Registrazione");
             }
         });
     }
@@ -101,8 +104,8 @@ public class PotholesActivity extends AppCompatActivity {
                         if (location != null) {
                             latTv = new TextView(PotholesActivity.this);
                             longTv = new TextView(PotholesActivity.this);
-                            latidutine = String.valueOf(location.getLatitude());
-                            longitudine = String.valueOf(location.getLongitude());
+                            latidutine = location.getLatitude();
+                            longitudine = location.getLongitude();
                             latTv.setText("trovata " + counter + " buca\n"+ "lat:" + latidutine);
                             longTv.setText("long: " + longitudine+ "\n");
                             registrazioniSv.addView(latTv);
@@ -111,7 +114,7 @@ public class PotholesActivity extends AppCompatActivity {
                         else getCurrentPosIfNotLast();
                     }
                 });
-        if(latidutine != null && longitudine != null) {
+        if(latidutine != 0 && longitudine != 0) {
             String query = "insert into rilevazionebuca values('" + userName + "', '" + now + "'," + latidutine + ", " + longitudine + ", " + variazione + ")";
             Log.v("query:", query);
             sendQueryToServer(query);
@@ -134,8 +137,8 @@ public class PotholesActivity extends AppCompatActivity {
                             Toast.makeText(PotholesActivity.this, "CURRENT POS", Toast.LENGTH_SHORT).show();
                             latTv = new TextView(PotholesActivity.this);
                             longTv = new TextView(PotholesActivity.this);
-                            latidutine = String.valueOf(location.getLatitude());
-                            longitudine = String.valueOf(location.getLongitude());
+                            latidutine = location.getLatitude();
+                            longitudine = location.getLongitude();
                             latTv.setText("trovata " + counter + " buca\n"+ "lat:" + latidutine);
                             longTv.setText("long: " + longitudine+ "\n");
                             registrazioniSv.addView(latTv);
@@ -151,8 +154,8 @@ public class PotholesActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                newSock.setUp();
-                newSock.sendSomeMessage(query);
+
+                MainActivity.client.sendSomeMessage(query);
                 //client.cleanUp();
             }
         });
@@ -163,6 +166,6 @@ public class PotholesActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        newSock.cleanUp();
+        //newSock.cleanUp();
     }
 }

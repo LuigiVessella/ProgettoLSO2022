@@ -3,8 +3,8 @@ package com.example.main.ClientServer;
 import android.util.Log;
 
 import java.net.*;
-import java.util.Scanner;
 import java.io.*;
+import java.util.ArrayList;
 
 public class  ClientServer
 {
@@ -56,22 +56,23 @@ public class  ClientServer
         }
     }
 
-    public void converse()
+    public ArrayList<String> converse()
     {
         System.out.println("TalkToC.converse() invoked");
+        ArrayList<String> records = new ArrayList<>();
+        String line;
 
-        if (socket != null && inStream != null)
-        {
-            try
-            {
-                System.out.println(inStream.readLine());
-            }
-            catch(IOException e)
-            {
-                System.err.println("Conversation error with host " + host);
-                e.printStackTrace();
-            }
-        }
+        do {
+            try {
+                line = inStream.readLine();
+                if (line == null) return null; // socket closed
+                if (line.isEmpty()) break; // end of headers reached
+                // process line as needed...
+                System.out.println(line);
+            } catch (Exception i) {};
+        } while (true);
+
+        return records;
     }
 
     public void cleanUp()
