@@ -67,11 +67,12 @@ public class GetRecords extends AppCompatActivity {
                 MainActivity.client.sendSomeMessage(query);
                 getResult =  MainActivity.client.converse();
                 System.out.println("sto qua");
+                System.out.println("ho: " + getResult.get(2));
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
 
-                        System.out.println("ho: " + getResult.get(1));
+
 
                     }
                 });

@@ -68,10 +68,11 @@ public class  ClientServer
                 if (line == null) return null; // socket closed
                 if (line.isEmpty()) break; // end of headers reached
                 // process line as needed...
+                records.add(line);
                 System.out.println(line);
             } catch (Exception i) {};
         } while (true);
-
+        //System.out.println("il primo:" + records.get(1).toString());
         return records;
     }
 
