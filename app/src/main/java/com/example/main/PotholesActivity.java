@@ -39,8 +39,8 @@ public class PotholesActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private Integer counter;
     private String userName = MainActivity.userName;
-    private double  latidutine = 0;
-    private double longitudine = 0;
+    private String latidutine = "";
+    private String longitudine = "";
     //lo dichiariamo static e final, così sarà comune a tutte le classi
     //public static final ClientServer newSock = new ClientServer("192.168.1.14", 8080);
 
@@ -104,8 +104,8 @@ public class PotholesActivity extends AppCompatActivity {
                         if (location != null) {
                             latTv = new TextView(PotholesActivity.this);
                             longTv = new TextView(PotholesActivity.this);
-                            latidutine = location.getLatitude();
-                            longitudine = location.getLongitude();
+                            latidutine = " " + String.valueOf(location.getLatitude()) + " ";
+                            longitudine = String.valueOf(location.getLongitude()) + " ";
                             latTv.setText("trovata " + counter + " buca\n"+ "lat:" + latidutine);
                             longTv.setText("long: " + longitudine+ "\n");
                             registrazioniSv.addView(latTv);
@@ -114,8 +114,8 @@ public class PotholesActivity extends AppCompatActivity {
                         else getCurrentPosIfNotLast();
                     }
                 });
-        if(latidutine != 0 && longitudine != 0) {
-            String query = "insert into rilevazionebuca values('" + userName + "', '" + now + "'," + latidutine + ", " + longitudine + ", " + variazione + ")";
+        if(!latidutine.isEmpty()) {
+            String query = "insert into rilevazionebuca values('" + userName + "', '" + now + "','" + latidutine + "', '" + longitudine + "', " + variazione + ")";
             Log.v("query:", query);
             sendQueryToServer(query);
         }
@@ -137,8 +137,8 @@ public class PotholesActivity extends AppCompatActivity {
                             Toast.makeText(PotholesActivity.this, "CURRENT POS", Toast.LENGTH_SHORT).show();
                             latTv = new TextView(PotholesActivity.this);
                             longTv = new TextView(PotholesActivity.this);
-                            latidutine = location.getLatitude();
-                            longitudine = location.getLongitude();
+                            latidutine = String.valueOf(location.getLatitude());
+                            longitudine = String.valueOf(location.getLongitude());
                             latTv.setText("trovata " + counter + " buca\n"+ "lat:" + latidutine);
                             longTv.setText("long: " + longitudine+ "\n");
                             registrazioniSv.addView(latTv);
