@@ -38,7 +38,7 @@ public class PotholesActivity extends AppCompatActivity {
     private LinearLayout registrazioniSv;
     private FusedLocationProviderClient fusedLocationClient;
     private Integer counter;
-    private String userName = MainActivity.userName;
+    private String userName = MainActivity.userName + " ";
     private String latidutine = "";
     private String longitudine = "";
     //lo dichiariamo static e final, così sarà comune a tutte le classi
