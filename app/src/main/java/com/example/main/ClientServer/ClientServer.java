@@ -22,7 +22,7 @@ public class  ClientServer
     }
     public void setUp()
     {
-        System.out.println("TalkToC.setUp() invoked");
+        System.out.println("Connessione con socket stabilita");
 
         try
         {
@@ -46,7 +46,7 @@ public class  ClientServer
 
     public void sendSomeMessage(String stringa) {
         try {
-            Log.v("sto inviando: ", stringa);
+            Log.v("sto inviando ", stringa);
             ostream = socket.getOutputStream();
             pwrite = new PrintWriter(ostream, true);
             pwrite.println(stringa);
@@ -60,7 +60,7 @@ public class  ClientServer
     public ArrayList<String> converse()
     {
         //ricevo i record dal server
-        System.out.println("TalkToC.converse() invoked");
+        System.out.println("sto ricevendo i record");
         ArrayList<String> records = new ArrayList<>();
         String line;
 
@@ -74,7 +74,7 @@ public class  ClientServer
                 System.out.println(line);
             } catch (Exception i) {};
         } while (true);
-        //System.out.println("il primo:" + records.get(1).toString());
+        System.out.println("il primo:" + records.get(1).toString());
         return records;
     }
 

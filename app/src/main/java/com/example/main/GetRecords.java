@@ -1,18 +1,34 @@
 package com.example.main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.main.EntityClasses.Pothole;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
+import com.google.android.gms.tasks.CancellationTokenSource;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +40,11 @@ public class GetRecords extends AppCompatActivity {
     private Button btnBack;
     private String query;
     private ArrayList<Pothole> listPotholes = new ArrayList<>();
+    private Spinner spinnerDistance;
+    private ArrayAdapter<CharSequence> adapter;
+    private FusedLocationProviderClient fusedLocationClient;
+    private double latidutine = 0, longitudine = 0;
+    private Location loc;
 
 
     //ecco l'array riempito con i risultati
@@ -37,6 +58,7 @@ public class GetRecords extends AppCompatActivity {
         } catch (NullPointerException e) {
         }
         setContentView(R.layout.activity_get_records);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         initializeComponents();
     }
 
@@ -44,6 +66,22 @@ public class GetRecords extends AppCompatActivity {
     public void initializeComponents(){
         btnBack = findViewById(R.id.buttonBack);
         getResult = new ArrayList<>();
+        spinnerDistance = findViewById(R.id.spinner);
+        adapter = ArrayAdapter.createFromResource(this, R.array.distances_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDistance.setAdapter(adapter);
+
+        spinnerDistance.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getPosition();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,13 +94,12 @@ public class GetRecords extends AppCompatActivity {
 
 
 
-        setString("luigi 2022-12-0941.295457214.3299172.836057685946772");
-        query = "select * from rilevazionebuca";
-        sendQueryToServer(query);
+
 
     }
 
     private void sendQueryToServer(String query){
+
         //qui il codice per mandare la query al server
         final Handler handler = new Handler();
         Thread thread = new Thread(new Runnable() {
@@ -72,9 +109,10 @@ public class GetRecords extends AppCompatActivity {
                 MainActivity.client.sendSomeMessage(query);
                 //qua metto i risultati nel nostro arrayList
                 getResult =  MainActivity.client.converse();
-                getResult.remove(0);
-                getResult.remove(0);;
+
+
                 for(String s : getResult){
+                    System.out.println("sto qua");
                     Pothole tmpPoth = setString(s);
                     listPotholes.add(tmpPoth);
                 }
@@ -93,6 +131,7 @@ public class GetRecords extends AppCompatActivity {
     private void setText() {
         //ArrayList di prova
         reciclerPotholesView = findViewById(R.id.recyclerViewPoth);
+        reciclerPotholesView.setAdapter(null);
         reciclerPotholesView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         PotholesAdapter potholesAdapter = new PotholesAdapter(getApplicationContext(), listPotholes);
         reciclerPotholesView.setAdapter(potholesAdapter);
@@ -101,13 +140,49 @@ public class GetRecords extends AppCompatActivity {
     }
 
     public Pothole setString(String string){
+        double radius = Double.parseDouble((String) spinnerDistance.getSelectedItem()) * 1000;//ottengo i metri
+
+        Log.v("informazioni", "ho" + radius + latidutine + longitudine);
         String[] tmpString = string.split(" ", 2);
         String nameUser = tmpString[0];
         String data = tmpString[1].substring(0, 10);
         String latitude = tmpString[1].substring(10, 20);
         String longitude = tmpString[1].substring(20, 29);
-        Pothole potholeToReturn = new Pothole(nameUser, " ", data, Double.parseDouble(latitude) , Double.parseDouble(longitude), 2.1);
-        return potholeToReturn;
+        Location loc2 = new Location("");
+        loc2.setLatitude(Double.parseDouble(latitude));
+        loc2.setLongitude(Double.parseDouble(longitude));
+
+        if(loc.distanceTo(loc2) < radius) {
+            Pothole potholeToReturn = new Pothole(nameUser, " ", data, Double.parseDouble(latitude), Double.parseDouble(longitude), 2.1);
+            return potholeToReturn;
+        } else return null;
+
+    }
+
+    private void getPosition(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            latidutine = location.getLatitude();
+                            longitudine = location.getLongitude();
+                            loc = location;
+                            Log.v("ciao", "" + latidutine);
+                            query = "select * from rilevazionebuca";
+                            listPotholes.removeAll(listPotholes);
+                            sendQueryToServer(query);
+                        }
+                        else Log.v("errore", "non riesco a ottenere la posizione");
+
+                    }
+                });
+
 
     }
 }

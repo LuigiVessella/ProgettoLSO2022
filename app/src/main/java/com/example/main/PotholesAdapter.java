@@ -69,12 +69,13 @@ public class PotholesAdapter extends RecyclerView.Adapter<PotholesAdapter.Pothol
         void SetDetails(Pothole tmpPothole) {
             //Potremmo aggiungere la città dove è stata rilevata che si dovrebbe prendere dalle coordiante e magari la distanza
             //dall' utente
-
-            dateTextView.setText(tmpPothole.getDate());
-            longitudeTextView.setText(tmpPothole.getLongitude().toString());
-            latitudeTextView.setText(tmpPothole.getLatitude().toString());
-            userTextView.setText(tmpPothole.getUsername());
-            cityTextView.setText(getCity(tmpPothole.getLatitude(), tmpPothole.getLongitude()) +"\n");
+            if(tmpPothole!=null) {
+                dateTextView.setText(tmpPothole.getDate());
+                longitudeTextView.setText(tmpPothole.getLongitude().toString());
+                latitudeTextView.setText(tmpPothole.getLatitude().toString());
+                userTextView.setText(tmpPothole.getUsername());
+                cityTextView.setText(getCity(tmpPothole.getLatitude(), tmpPothole.getLongitude()) + "\n");
+            }
         }
 
         private String getCity(double lat, double longit) {
