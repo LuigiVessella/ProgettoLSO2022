@@ -25,15 +25,9 @@ import android.widget.Toast;
 import com.example.main.EntityClasses.Pothole;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.Priority;
-import com.google.android.gms.tasks.CancellationTokenSource;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class GetRecords extends AppCompatActivity {
     private RecyclerView reciclerPotholesView;
@@ -112,9 +106,10 @@ public class GetRecords extends AppCompatActivity {
 
 
                 for(String s : getResult){
-                    System.out.println("sto qua");
                     Pothole tmpPoth = setString(s);
-                    listPotholes.add(tmpPoth);
+                    if(tmpPoth != null){
+                        listPotholes.add(tmpPoth);
+                    }
                 }
                 handler.post(new Runnable() {
                     @Override
@@ -145,9 +140,12 @@ public class GetRecords extends AppCompatActivity {
         Log.v("informazioni", "ho" + radius + latidutine + longitudine);
         String[] tmpString = string.split(" ", 2);
         String nameUser = tmpString[0];
-        String data = tmpString[1].substring(0, 10);
-        String latitude = tmpString[1].substring(10, 20);
-        String longitude = tmpString[1].substring(20, 29);
+        String[] dataSplit = tmpString[1].split(" ", 2);
+        String data = dataSplit[0];
+        String[] latitudeSplit = dataSplit[1].split(" ", 2);
+        String latitude = latitudeSplit[0];
+        String[] longitudeSplit = latitudeSplit[1].split(" ", 2);
+        String longitude = longitudeSplit[0];
         Location loc2 = new Location("");
         loc2.setLatitude(Double.parseDouble(latitude));
         loc2.setLongitude(Double.parseDouble(longitude));
@@ -156,7 +154,6 @@ public class GetRecords extends AppCompatActivity {
             Pothole potholeToReturn = new Pothole(nameUser, " ", data, Double.parseDouble(latitude), Double.parseDouble(longitude), 2.1);
             return potholeToReturn;
         } else return null;
-
     }
 
     private void getPosition(){
