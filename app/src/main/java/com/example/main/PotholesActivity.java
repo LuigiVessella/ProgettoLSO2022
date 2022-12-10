@@ -7,6 +7,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,9 @@ public class PotholesActivity extends AppCompatActivity {
     private String userName = MainActivity.userName + " ";
     private String latidutine = "";
     private String longitudine = "";
+    private Typeface typeface;
+
+
     //lo dichiariamo static e final, così sarà comune a tutte le classi
     //public static final ClientServer newSock = new ClientServer("192.168.1.14", 8080);
 
@@ -57,6 +61,7 @@ public class PotholesActivity extends AppCompatActivity {
     }
 
     private void initializeComponents() {
+        typeface = getResources().getFont(R.font.roboto_black);
         welcomeTv = findViewById(R.id.welcomeTextView);
         buttonGetPos = findViewById(R.id.buttonGetPos);
         registrazioniSv = findViewById(R.id.linearScroll);
@@ -104,6 +109,8 @@ public class PotholesActivity extends AppCompatActivity {
                         if (location != null) {
                             latTv = new TextView(PotholesActivity.this);
                             longTv = new TextView(PotholesActivity.this);
+                            latTv.setTypeface(typeface);
+                            longTv.setTypeface(typeface);
                             latidutine = " " + String.valueOf(location.getLatitude()) + " ";
                             longitudine = String.valueOf(location.getLongitude()) + " ";
                             latTv.setText("trovata " + counter + " buca\n"+ "lat:" + latidutine);
