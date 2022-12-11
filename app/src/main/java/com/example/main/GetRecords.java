@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.example.main.EntityClasses.Pothole;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
+import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 
@@ -156,7 +158,7 @@ public class GetRecords extends AppCompatActivity {
         } else return null;
     }
 
-    private void getPosition(){
+    private void getPosition() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
@@ -174,12 +176,41 @@ public class GetRecords extends AppCompatActivity {
                             query = "select * from rilevazionebuca";
                             listPotholes.removeAll(listPotholes);
                             sendQueryToServer(query);
+                        } else {
+                            Log.v("errore", "non riesco a ottenere la posizione");
+                            getCurrentPosIfNotLast();
                         }
-                        else Log.v("errore", "non riesco a ottenere la posizione");
 
+                    }
+                });
+    }
+    private void getCurrentPosIfNotLast() {
+        CancellationTokenSource cts = new CancellationTokenSource();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, cts.getToken())
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            latidutine = location.getLatitude();
+                            longitudine = location.getLongitude();
+                            loc = location;
+                            Log.v("ciao", "" + latidutine);
+                            query = "select * from rilevazionebuca";
+                            listPotholes.removeAll(listPotholes);
+                            sendQueryToServer(query);
+                            return;
+                        }
                     }
                 });
 
 
     }
+
+
 }
