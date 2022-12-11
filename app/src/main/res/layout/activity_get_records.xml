@@ -50,6 +50,7 @@
 
     <Spinner
         android:id="@+id/spinner"
+        style="@android:style/Widget.Spinner"
         android:layout_width="234dp"
         android:layout_height="46dp"
         android:hint="Distanza in km:"
@@ -57,10 +58,10 @@
         android:textColorHint="#05ab9a"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonBack"
-        app:layout_constraintVertical_bias="0.274" />
+        app:layout_constraintVertical_bias="0.241" />
 
     <TextView
         android:id="@+id/textView2"

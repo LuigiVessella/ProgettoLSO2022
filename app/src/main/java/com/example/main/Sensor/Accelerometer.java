@@ -64,7 +64,6 @@ public class Accelerometer extends Application{
                 }
 
             }
-        System.out.println("sono uscito dal while");
         lastValue = newValue;
     }
 }

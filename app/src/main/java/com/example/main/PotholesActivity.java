@@ -67,7 +67,7 @@ public class PotholesActivity extends AppCompatActivity {
         registrazioniSv = findViewById(R.id.linearScroll);
         bucaTv = findViewById(R.id.textViewBuca);
         visualizzaBtn = findViewById(R.id.buttonVisualizza);
-        welcomeTv.setText("Benvenuto, " + userName);
+        welcomeTv.setText("Benvenuto " + userName);
 
 
         counter = 0;
