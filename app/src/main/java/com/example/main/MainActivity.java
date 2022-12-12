@@ -2,7 +2,10 @@ package com.example.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -36,7 +39,16 @@ public class MainActivity extends AppCompatActivity {
         initializeComponents();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(!isInternetConnected()) {
+            btnSignin.setEnabled(false);
+            Toast.makeText(MainActivity.this, "Non sei connesso a internet", Toast.LENGTH_SHORT).show();
+        }
+        else btnSignin.setEnabled(true);
 
+    }
     public void initializeComponents(){
 
         btnSignin = findViewById(R.id.loginButton2);
@@ -85,5 +97,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         thread.start();
+    }
+
+    private Boolean isInternetConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        }
+        else
+            return false;
     }
 }
