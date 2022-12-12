@@ -65,7 +65,9 @@ public class GetRecords extends AppCompatActivity {
         spinnerDistance = findViewById(R.id.spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.distances_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDistance.setPrompt("Distanza dalle buche (in KM)");
         spinnerDistance.setAdapter(adapter);
+
 
         spinnerDistance.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -75,6 +77,7 @@ public class GetRecords extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
 
             }
         });

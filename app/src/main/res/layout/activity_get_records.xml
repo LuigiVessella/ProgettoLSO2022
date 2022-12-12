@@ -67,7 +67,7 @@
         android:id="@+id/textView2"
         android:layout_width="310dp"
         android:layout_height="36dp"
-        android:text="Distanza massima delle buche:"
+        android:text="Distanza massima dalle buche:"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
