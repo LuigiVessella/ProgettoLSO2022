@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                userName = String.valueOf(someText.getText()).trim();
+                userName = String.valueOf(someText.getText()).replaceAll("\\s+","");
                 if(TextUtils.isEmpty(userName) || userName.length() < 3){
                     someText.setError("inserisci un nome valido!");
                     return;
