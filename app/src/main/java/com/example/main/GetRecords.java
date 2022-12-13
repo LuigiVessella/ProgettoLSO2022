@@ -209,6 +209,7 @@ public class GetRecords extends AppCompatActivity {
                             sendQueryToServer(query);
                             return;
                         }
+                        else Toast.makeText(GetRecords.this, "non sono riuscito ad ottenere la posizione", Toast.LENGTH_SHORT).show();
                     }
                 });
 
