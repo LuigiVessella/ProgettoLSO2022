@@ -90,11 +90,6 @@ public class GetRecords extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
-
     }
 
     private void sendQueryToServer(String query){
