@@ -23,8 +23,6 @@ public class Accelerometer extends Application{
     private double lastValue = 0;
     private Activity activity;
 
-
-
     public Accelerometer(Context c, Activity a){
         activity = a;
         context = c;
