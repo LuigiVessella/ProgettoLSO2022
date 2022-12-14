@@ -50,8 +50,6 @@ public class Accelerometer extends Application{
 
     public void checkPothole(double newValue, PotholesActivity act){
         double variazione = 0;
-        Gps gps = new Gps(context, activity);
-        gps.getPosition();
 
         if(lastValue != 0 ){
             if((variazione = lastValue - newValue) >= 2){
