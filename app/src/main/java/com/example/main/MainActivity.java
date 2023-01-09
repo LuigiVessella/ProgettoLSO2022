@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.example.main.ClientServer.ClientServer;
 import com.example.main.Sensor.Accelerometer;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
     public static final ClientServer client = new ClientServer("4.236.136.210", 8080);;
     private Accelerometer acc;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent potholesIntent;
     private EditText someText;
     public static String userName;
+    public static Boolean isHostOnline = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //mandiamo l'username al server
                 sendMessageToServer(userName);
-                switchActivity(userName);
+                if(isHostOnline) {
+                    switchActivity(userName);
+                }
             }
         });
 
@@ -90,8 +95,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 client.setUp();
-                client.sendSomeMessage(stringa.trim());
+                if(!isHostOnline) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Toast.makeText(MainActivity.this, "Server offline", Toast.LENGTH_SHORT).show();
+                            someText.setError("Server offline");
+                        }
+                    });
+                } else {
+                    client.sendSomeMessage(stringa.trim());
+                }
                 //client.cleanUp();
+
+
 
             }
         });

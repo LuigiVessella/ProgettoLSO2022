@@ -1,6 +1,9 @@
 package com.example.main.ClientServer;
 
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.main.MainActivity;
 
 import java.net.*;
 import java.io.*;
@@ -26,6 +29,7 @@ public class  ClientServer
 
         try
         {
+            MainActivity.isHostOnline = true;
             socket = new Socket(host, port);
             inStream = new BufferedReader(new InputStreamReader(
                     socket.getInputStream()));
@@ -34,13 +38,15 @@ public class  ClientServer
         {
             System.err.println("Cannot find host called: " + host);
             e.printStackTrace();
-            System.exit(-1);
+            MainActivity.isHostOnline = false;
+
         }
         catch(IOException e)
         {
             System.err.println("Could not establish connection for " + host);
             e.printStackTrace();
-            System.exit(-1);
+            MainActivity.isHostOnline = false;
+
         }
     }
 
