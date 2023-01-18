@@ -17,7 +17,7 @@ public class  ClientServer
     private BufferedReader inStream = null;
     private OutputStream ostream = null;
     private PrintWriter pwrite = null;
-
+    public static boolean isOn = false;
 
     public ClientServer(String host, int port){
         this.host = host;
@@ -25,6 +25,7 @@ public class  ClientServer
     }
     public void setUp()
     {
+        isOn = true;
         System.out.println("Connessione con socket stabilita");
 
         try

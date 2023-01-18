@@ -99,7 +99,7 @@ public class GetRecords extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                MainActivity.client.setUp();
+                //MainActivity.client.setUp();
                 MainActivity.client.sendSomeMessage(query);
                 //qua metto i risultati nel nostro arrayList
                 getResult =  MainActivity.client.converse();
@@ -137,7 +137,7 @@ public class GetRecords extends AppCompatActivity {
     public Pothole setString(String string){
         double radius = Double.parseDouble((String) spinnerDistance.getSelectedItem()) * 1000;//ottengo i metri
 
-        Log.v("informazioni", "ho" + radius + latidutine + longitudine);
+        Log.v("informazioni", "ho " + radius + " " + latidutine + " " + longitudine);
         String[] tmpString = string.split(" ", 2);
         String nameUser = tmpString[0];
         String[] dataSplit = tmpString[1].split(" ", 2);
@@ -209,6 +209,14 @@ public class GetRecords extends AppCompatActivity {
                 });
 
 
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+        Log.v("log", "array pulito");
+        listPotholes.removeAll(listPotholes);
     }
 
 

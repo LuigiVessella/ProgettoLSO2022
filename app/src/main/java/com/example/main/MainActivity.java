@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                client.setUp();
+                if(!client.isOn) client.setUp();
                 if(!isHostOnline) {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -125,5 +125,12 @@ public class MainActivity extends AppCompatActivity {
         }
         else
             return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+
     }
 }

@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -73,20 +76,26 @@ public class PotholesActivity extends AppCompatActivity {
         buttonGetPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Accelerometer acc = new Accelerometer(getApplicationContext(), PotholesActivity.this);
-                buttonGetPos.setText("RILEVANDO...");
-                buttonGetPos.setTextColor(Color.WHITE);
+                if(isInternetConnected()) {
+                    Accelerometer acc = new Accelerometer(getApplicationContext(), PotholesActivity.this);
+                    buttonGetPos.setText("RILEVANDO...");
+                    buttonGetPos.setTextColor(Color.WHITE);
+                }
+
             }
         });
 
         visualizzaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextActivity = new Intent(PotholesActivity.this, GetRecords.class);
+                if(isInternetConnected()) {
+                    nextActivity = new Intent(PotholesActivity.this, GetRecords.class);
 
-                startActivity(nextActivity);
-                buttonGetPos.setText("Registrazione");
-                finish();
+                    startActivity(nextActivity);
+                    buttonGetPos.setText("Registrazione");
+                    finish();
+                }
+                else Toast.makeText(PotholesActivity.this, "No Connection", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -172,5 +181,18 @@ public class PotholesActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         //newSock.cleanUp();
+
+    }
+
+
+    private Boolean isInternetConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        }
+        else
+            return false;
     }
 }
