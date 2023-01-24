@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void initializeComponents(){
-
         btnSignin = findViewById(R.id.loginButton2);
         potholesIntent = new Intent(this, PotholesActivity.class);
         someText = findViewById(R.id.emailLoginEditText);
@@ -94,7 +94,14 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(!client.isOn) client.setUp();
+                if(!client.isOn) {
+                    client.setUp();
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "Server online, click on signin button!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
                 if(!isHostOnline) {
                     runOnUiThread(new Runnable() {
                         @Override
