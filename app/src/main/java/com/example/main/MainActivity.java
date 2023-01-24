@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnSignin = findViewById(R.id.loginButton2);
         potholesIntent = new Intent(this, PotholesActivity.class);
         someText = findViewById(R.id.emailLoginEditText);
+        checkConnection();
 
         //Action after sign in
         btnSignin.setOnClickListener(new View.OnClickListener() {
@@ -94,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if(!client.isOn) {
+             /*   if(!client.isOn) {
                     client.setUp();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(MainActivity.this, "Server online, click on signin button!", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
+                }*/
                 if(!isHostOnline) {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -132,6 +133,19 @@ public class MainActivity extends AppCompatActivity {
         }
         else
             return false;
+    }
+
+    private void checkConnection(){
+        Handler handler = new Handler();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (!client.isOn) {
+                    client.setUp();
+                }
+            }
+        });
+        thread.start();
     }
 
     @Override
