@@ -40,17 +40,21 @@ public class Accelerometer extends Application{
         mAccelLast = SensorManager.GRAVITY_EARTH;
 
         SensorEventListener sel = new SensorEventListener() {
-
+            //il nuovo codice è preossochè identico al precedente, solo che ho ordinato un pò le formule e aggiunto il quadrato
             public void onSensorChanged(SensorEvent se) {
-                /*accX = sEvent.values[0];
+                /*
+                accX = sEvent.values[0];
                 accY = sEvent.values[1];
                 accZ = sEvent.values[2];
                 valueTest = Math.sqrt(accX * accX + accY * accY + accZ * accZ);
                 checkPothole(valueTest, (PotholesActivity) activity);
-                //System.out.println("VALORE NUOVO " + accZ);*/
+                //System.out.println("VALORE NUOVO " + accZ);
+                */
+
                 float x = se.values[0];
                 float y = se.values[1];
                 float z = se.values[2];
+
                 mGravity = se.values.clone();
                 // Shake detection
                 x = mGravity[0];
@@ -83,9 +87,9 @@ public class Accelerometer extends Application{
                 }
 
             }
-        lastValue = 0;*/
+        lastValue = newValue;*/
 
-        if(mAccel > 5) {
+        if(newValue > 5) {
             act.setCoordinate(mAccel);
         }
 
