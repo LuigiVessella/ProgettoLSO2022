@@ -23,21 +23,44 @@ public class Accelerometer extends Application{
     private double lastValue = 0;
     private Activity activity;
 
+    private float[] mGravity;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
+
+
     public Accelerometer(Context c, Activity a){
         activity = a;
         context = c;
         SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        mAccel = 0.00f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
+
         SensorEventListener sel = new SensorEventListener() {
 
-            public void onSensorChanged(SensorEvent sEvent) {
-                accX = sEvent.values[0];
+            public void onSensorChanged(SensorEvent se) {
+                /*accX = sEvent.values[0];
                 accY = sEvent.values[1];
                 accZ = sEvent.values[2];
-                valueTest = Math.sqrt(accX + accY + accZ);
+                valueTest = Math.sqrt(accX * accX + accY * accY + accZ * accZ);
                 checkPothole(valueTest, (PotholesActivity) activity);
-                //System.out.println("VALORE NUOVO " + accZ);
+                //System.out.println("VALORE NUOVO " + accZ);*/
+                float x = se.values[0];
+                float y = se.values[1];
+                float z = se.values[2];
+                mGravity = se.values.clone();
+                // Shake detection
+                x = mGravity[0];
+                y = mGravity[1];
+                z = mGravity[2];
+                mAccelLast = mAccelCurrent;
+                mAccelCurrent = (float) Math.sqrt(x * x + y * y + z * z);
+                float delta = mAccelCurrent - mAccelLast;
+                mAccel = mAccel * 0.9f + delta;
+                checkPothole(mAccel, (PotholesActivity) activity);
             }
 
             public void onAccuracyChanged(Sensor sensor, int accuracy) {}
@@ -47,9 +70,9 @@ public class Accelerometer extends Application{
     }
 
     public void checkPothole(double newValue, PotholesActivity act){
-        double variazione = 0;
+        //double variazione = 0;
 
-        if(lastValue != 0 ){
+        /* if(lastValue != 0 ){
             if((variazione = lastValue - newValue) >= 2){
                 Log.d("Evento: ", "BUCA TROVATA");
                 Log.d("LAST VALUE ", String.valueOf(lastValue));
@@ -60,6 +83,12 @@ public class Accelerometer extends Application{
                 }
 
             }
-        lastValue = newValue;
+        lastValue = 0;*/
+
+        if(mAccel > 5) {
+            act.setCoordinate(mAccel);
+        }
+
+
     }
 }
