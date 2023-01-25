@@ -69,7 +69,7 @@ public class  ClientServer
         //ricevo i record dal server
         System.out.println("sto ricevendo i record");
         ArrayList<String> records = new ArrayList<>();
-        String line;
+        String line = "";
 
         do {
             try {

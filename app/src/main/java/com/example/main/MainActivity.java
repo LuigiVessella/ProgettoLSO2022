@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+
         if(!isInternetConnected()) {
             btnSignin.setEnabled(false);
             Toast.makeText(MainActivity.this, "Non sei connesso a internet", Toast.LENGTH_SHORT).show();
@@ -63,20 +64,18 @@ public class MainActivity extends AppCompatActivity {
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                userName = String.valueOf(someText.getText()).replaceAll("\\s+","");
-                if(TextUtils.isEmpty(userName) || userName.length() < 3){
+                userName = String.valueOf(someText.getText()).replaceAll("\\s+", "");
+                if (TextUtils.isEmpty(userName) || userName.length() < 3) {
                     someText.setError("inserisci un nome valido!");
                     return;
                 }
                 //mandiamo l'username al server
                 sendMessageToServer(userName);
-                if(isHostOnline) {
+                if (isHostOnline) {
                     switchActivity(userName);
                 }
             }
         });
-
     }
 
 
@@ -86,24 +85,17 @@ public class MainActivity extends AppCompatActivity {
         activitySwitcher = new Intent(MainActivity.this, PotholesActivity.class);
         activitySwitcher.putExtra("user", userName);
         startActivity(activitySwitcher);
-        finish();
-
+        //finish();
     }
 
     public void sendMessageToServer(String stringa){
+
         final Handler handler = new Handler();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-             /*   if(!client.isOn) {
-                    client.setUp();
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(MainActivity.this, "Server online, click on signin button!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }*/
                 if(!isHostOnline) {
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -115,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
                     client.sendSomeMessage(stringa.trim());
                 }
                 //client.cleanUp();
-
-
-
             }
         });
 
@@ -150,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
+        client.cleanUp();
         super.onDestroy();
 
     }
